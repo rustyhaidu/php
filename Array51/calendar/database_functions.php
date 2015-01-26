@@ -25,25 +25,29 @@ function show_events($day,$month,$year)
 {
 global $connection;
 $query = 'Select id,title, details, eventdate,addedevent from events where eventdate = "'.$day.'/'.$month.'/'.$year.'" order by eventdate';
+//echo $query;
 			$result = mysqli_query($connection, $query);
 			echo "<table border='1'>";
-			foreach ($result as $value)
+			if($result)
 			{
-				echo "<tr>
-							<td>".$value['id']."</td>
-							<td>".$value['title']."</td>
-							<td>".$value['details']."</td>
-							<td>".$value['eventdate']."</td>
-							<td>".$value['addedevent']."</td>
-							<td><a href='".$_SERVER['PHP_SELF']."?edit=true&id=".$value['id']."'>
-								<input style='height:50px' type ='button' value='EDIT' name ='edit'>
-								</td>
-							<td><a href='".$_SERVER['PHP_SELF']."?delete=true&id=".$value['id']."'>
-								<input style='height:50px' type ='button' value='DELETE' name ='delete'>
-								</td>	
-				     </tr>";
-			}
-			echo "</table>";
+				foreach ($result as $value)
+				{
+					echo "<tr>
+								<td>".$value['id']."</td>
+								<td>".$value['title']."</td>
+								<td>".$value['details']."</td>
+								<td>".$value['eventdate']."</td>
+								<td>".$value['addedevent']."</td>
+								<td><a href='".$_SERVER['PHP_SELF']."?vedit=true&edit=true&id=".$value['id']."'>
+									<input style='height:50px' type ='button' value='EDIT' name ='edit'>
+									</td>
+								<td><a href='".$_SERVER['PHP_SELF']."?delete=true&id=".$value['id']."'>
+									<input style='height:50px' type ='button' value='DELETE' name ='delete'>
+									</td>	
+						 </tr>";
+				}
+				echo "</table>";
+			}	
 }
 		
 //echo "<a href='".$_SERVER['PHP_SELF']."?month=".$month."&day=".$day."&year=".$year."&v=true&f=true'>Add Event</a>";
@@ -69,7 +73,7 @@ function edit_event_form($day,$month,$year)
 				$event_details = $value['details'];							
 			}
 	
-	echo '<form name="eventform" method = "post" action ='.$_SERVER['PHP_SELF'].'?day='.$day.'&month='.$month.'&year='.$year.'&v=true&edit=true&id='.$id.'>
+	echo '<form name="eventform" method = "post" action ='.$_SERVER['PHP_SELF'].'?vedit=true&edit=true&id='.$id.'>
 		<table width="400px">
 			<tr>
 				<td width="50px">Title</td>
@@ -93,14 +97,13 @@ function update_event($id)
 {
 	global $connection;
 	$update = 'Update events set addedevent = now(), title="'.$_POST['edittitle'].'",details="'.$_POST['editdetail'].'" where id='.$id;
-	//echo $update;
 	$result_update = mysqli_query($connection,$update);
 	if ($result_update)
 	{
-		echo "Event Updated Successfully";
+		echo "Event Updated Successfully. Please Refresh!";
 	}
 	else
 	{
-		echo "event not updated";
+		echo "event not updated";		
 	}
 }

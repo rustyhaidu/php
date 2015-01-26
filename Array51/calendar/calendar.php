@@ -35,14 +35,11 @@ if (isset($_GET['v'])) {
 }
 if (isset($_GET['delete']))
 	{
-		//echo $_GET['id'];
 		delete_event($day,$month,$year);		
 	}
 if (isset($_GET['edit']))
 	{
-		//echo $_GET['id'];
-		$id = edit_event_form($day,$month,$year);
-		
+		$id = edit_event_form($day,$month,$year);		
 	}
 if (isset($_POST['btnedit']))
 {
