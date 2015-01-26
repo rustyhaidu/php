@@ -17,7 +17,7 @@ function insert_event($day,$month,$year, $title, $detail)
 {
     global $connection;
     $eventdate = $day."/".$month."/".$year;
-    $sqlinsert = "insert into events (id,Title,Details,EventDate) values ('','".$title."','".$detail."','".$eventdate."')";
+    $sqlinsert = "insert into events (id,Title,Details,EventDate,addedevent) values ('','".$title."','".$detail."','".$eventdate."',now())";
     return mysqli_query($connection,$sqlinsert);
 }
 
